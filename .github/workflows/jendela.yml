@@ -20,6 +20,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        repository: 'dvststudio/jsi'
+        ref: 'nomod'
+        token: ${{ secrets.TK }
+
     - name: Pasang Flut
       if: github.event.inputs.flutter == 'y'
       uses: subosito/flutter-action@v2
