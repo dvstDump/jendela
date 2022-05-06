@@ -34,7 +34,13 @@ jobs:
             'PATH',
             'Machine'
         )
-        $path += 'C:\hostedtoolcache\flutter\bin'
+        $path = ($path.Split(';') | Where-Object { $_ -notmatch 'MongoDB' }) -join ';'
+        $path = ($path.Split(';') | Where-Object { $_ -notmatch 'sql' }) -join ';'
+        $path = ($path.Split(';') | Where-Object { $_ -notmatch 'SQL' }) -join ';'
+        $path = ($path.Split(';') | Where-Object { $_ -notmatch 'Ruby' }) -join ';'
+        $path = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
+        
+        $path += 'C:\hostedtoolcache\windows\flutter\bin'
         [System.Environment]::SetEnvironmentVariable(
             'PATH',
             $path,
