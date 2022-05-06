@@ -25,6 +25,7 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         cache: true
+        cache-path: 'C:\hostedtoolcache\windows\flutter\bin\;'
         channel: 'stable'
         flutter-version: '2.10'
 
@@ -40,7 +41,7 @@ jobs:
         $path = ($path.Split(';') | Where-Object { $_ -notmatch 'Ruby' }) -join ';'
         $path = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
         
-        $path += 'C:\hostedtoolcache\windows\flutter\bin'
+        $path += 'C:\hostedtoolcache\windows\flutter\bin\;'
         [System.Environment]::SetEnvironmentVariable(
             'PATH',
             $path,
