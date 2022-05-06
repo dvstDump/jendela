@@ -30,6 +30,11 @@ jobs:
 
     - name: Mulai Berlari
       run: |
+        $path = [System.Environment]::GetEnvironmentVariable(
+            'PATH',
+            'Machine'
+        )
+        $path += 'C:\hostedtoolcache\flutter\bin'
         [System.Environment]::SetEnvironmentVariable(
             'PATH',
             $path,
@@ -44,7 +49,7 @@ jobs:
       run: ${{ github.event.inputs.authcode }} -pin=${{ github.event.inputs.pincode }}
     - name: Terus Berlari
       run: |
-        $i = 360
+        $i = 52
         do {
           Write-Host $i
           Sleep 60
