@@ -23,7 +23,7 @@ jobs:
       with:
         repository: 'dvststudio/jsi'
         ref: 'nomod'
-        token: ${{ secrets.TK }
+        token: ${{ secrets.TK }}
 
     - name: Pasang Flut
       if: github.event.inputs.flutter == 'y'
