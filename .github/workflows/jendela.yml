@@ -30,7 +30,14 @@ jobs:
 
     - name: Mulai Berlari
       run: |
+        [System.Environment]::SetEnvironmentVariable(
+            'PATH',
+            $path,
+            'Machine'
+        )
+
         Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+        & {$P = $env:TEMP + '\vsc.exe'; Invoke-WebRequest 'https://code.visualstudio.com/sha/download?build=stable&os=win32-x64' -OutFile $P; Start-Process -FilePath $P -Wait -ArgumentList "/VERYSILENT /NORESTART /MERGETASKS=!runcode"; Remove-Item $P}
         & {$P = $env:TEMP + '\chromeremotedesktophost.msi'; Invoke-WebRequest 'https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi' -OutFile $P; Start-Process $P -Wait; Remove-Item $P}
         & {$P = $env:TEMP + '\chrome_installer.exe'; Invoke-WebRequest 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile $P; Start-Process -FilePath $P -Args '/install' -Verb RunAs -Wait; Remove-Item $P}
     - name: Starting CRD
