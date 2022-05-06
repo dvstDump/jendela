@@ -1,0 +1,45 @@
+name: Remot AC
+
+on: 
+  workflow_dispatch:
+    inputs:
+      authcode:
+        description: 'Enter CRD code'
+        required: true
+      pincode:
+        description: 'Six digit Pin'
+        required: true
+        default: '123456'
+      flutter:
+        description: 'Setup flutter?'
+        default: 'y'
+  
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Pasang Flut
+      if: github.event.inputs.flutter == 'y'
+      uses: subosito/flutter-action@v2
+      with:
+        cache: true
+        channel: 'stable'
+        flutter-version: '2.10'
+
+    - name: Mulai Berlari
+      run: |
+        Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+        & {$P = $env:TEMP + '\chromeremotedesktophost.msi'; Invoke-WebRequest 'https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi' -OutFile $P; Start-Process $P -Wait; Remove-Item $P}
+        & {$P = $env:TEMP + '\chrome_installer.exe'; Invoke-WebRequest 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile $P; Start-Process -FilePath $P -Args '/install' -Verb RunAs -Wait; Remove-Item $P}
+    - name: Starting CRD
+      run: ${{ github.event.inputs.authcode }} -pin=${{ github.event.inputs.pincode }}
+    - name: Terus Berlari
+      run: |
+        $i = 360
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
