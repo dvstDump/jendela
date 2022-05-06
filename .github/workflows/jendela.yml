@@ -30,7 +30,7 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         cache: true
-        cache-path: 'C:\hostedtoolcache\windows\flutter\bin\;'
+        cache-path: 'C:\hostedtoolcache\windows\flutter'
         channel: 'stable'
         flutter-version: '2.10'
 
